@@ -14,7 +14,175 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      automation_rules: {
+        Row: {
+          action: Json
+          condition: Json
+          created_at: string
+          enabled: boolean
+          id: string
+          last_triggered_at: string | null
+          name: string
+        }
+        Insert: {
+          action: Json
+          condition: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_triggered_at?: string | null
+          name: string
+        }
+        Update: {
+          action?: Json
+          condition?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_triggered_at?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      command_history: {
+        Row: {
+          command: string
+          created_at: string
+          id: string
+          parsed_action: Json | null
+          result: string | null
+          source: string
+          success: boolean
+        }
+        Insert: {
+          command: string
+          created_at?: string
+          id?: string
+          parsed_action?: Json | null
+          result?: string | null
+          source?: string
+          success?: boolean
+        }
+        Update: {
+          command?: string
+          created_at?: string
+          id?: string
+          parsed_action?: Json | null
+          result?: string | null
+          source?: string
+          success?: boolean
+        }
+        Relationships: []
+      }
+      device_states: {
+        Row: {
+          device_id: string
+          fan_speed: number | null
+          id: string
+          power_watts: number
+          status: boolean
+          temperature: number | null
+          updated_at: string
+        }
+        Insert: {
+          device_id: string
+          fan_speed?: number | null
+          id?: string
+          power_watts?: number
+          status: boolean
+          temperature?: number | null
+          updated_at?: string
+        }
+        Update: {
+          device_id?: string
+          fan_speed?: number | null
+          id?: string
+          power_watts?: number
+          status?: boolean
+          temperature?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "device_states_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      devices: {
+        Row: {
+          created_at: string
+          fan_speed: number
+          id: string
+          name: string
+          power_rating: number
+          room_id: string
+          slug: string
+          status: boolean
+          temperature: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          fan_speed?: number
+          id?: string
+          name: string
+          power_rating?: number
+          room_id: string
+          slug: string
+          status?: boolean
+          temperature?: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          fan_speed?: number
+          id?: string
+          name?: string
+          power_rating?: number
+          room_id?: string
+          slug?: string
+          status?: boolean
+          temperature?: number
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "devices_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rooms: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
