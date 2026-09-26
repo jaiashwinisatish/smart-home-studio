@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiDevicesRouteImport } from './routes/api/devices'
 import { Route as ApiRoomsRouteImport } from './routes/api/rooms'
+import { Route as ApiDevicesIdRouteImport } from './routes/api/devices.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,34 +29,42 @@ const ApiRoomsRoute = ApiRoomsRouteImport.update({
   path: '/api/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDevicesIdRoute = ApiDevicesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiDevicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/devices': typeof ApiDevicesRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
+  '/api/devices/$id': typeof ApiDevicesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/devices': typeof ApiDevicesRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
+  '/api/devices/$id': typeof ApiDevicesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/devices': typeof ApiDevicesRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
+  '/api/devices/$id': typeof ApiDevicesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/devices' | '/api/rooms'
+  fullPaths: '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/devices' | '/api/rooms'
-  id: '__root__' | '/' | '/api/devices' | '/api/rooms'
+  to: '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
+  id: '__root__' | '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiDevicesRoute: typeof ApiDevicesRoute
+  ApiDevicesRoute: typeof ApiDevicesRouteWithChildren
   ApiRoomsRoute: typeof ApiRoomsRoute
 }
 
@@ -82,12 +91,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/devices/$id': {
+      id: '/api/devices/$id'
+      path: '/$id'
+      fullPath: '/api/devices/$id'
+      preLoaderRoute: typeof ApiDevicesIdRouteImport
+      parentRoute: typeof ApiDevicesRoute
+    }
   }
 }
 
+interface ApiDevicesRouteChildren {
+  ApiDevicesIdRoute: typeof ApiDevicesIdRoute
+}
+
+const ApiDevicesRouteChildren: ApiDevicesRouteChildren = {
+  ApiDevicesIdRoute: ApiDevicesIdRoute,
+}
+
+const ApiDevicesRouteWithChildren = ApiDevicesRoute._addFileChildren(
+  ApiDevicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiDevicesRoute: ApiDevicesRoute,
+  ApiDevicesRoute: ApiDevicesRouteWithChildren,
   ApiRoomsRoute: ApiRoomsRoute,
 }
 export const routeTree = rootRouteImport
