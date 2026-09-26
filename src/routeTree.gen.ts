@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiDevicesRouteImport } from './routes/api/devices'
 import { Route as ApiRoomsRouteImport } from './routes/api/rooms'
 import { Route as ApiDevicesIdRouteImport } from './routes/api/devices.$id'
+import { Route as ApiDevicesIdToggleRouteImport } from './routes/api/devices.$id.toggle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,32 +35,56 @@ const ApiDevicesIdRoute = ApiDevicesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ApiDevicesRoute,
 } as any)
+const ApiDevicesIdToggleRoute = ApiDevicesIdToggleRouteImport.update({
+  id: '/toggle',
+  path: '/toggle',
+  getParentRoute: () => ApiDevicesIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
-  '/api/devices/$id': typeof ApiDevicesIdRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
-  '/api/devices/$id': typeof ApiDevicesIdRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
-  '/api/devices/$id': typeof ApiDevicesIdRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
+  fullPaths:
+    | '/'
+    | '/api/devices'
+    | '/api/rooms'
+    | '/api/devices/$id'
+    | '/api/devices/$id/toggle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
-  id: '__root__' | '/' | '/api/devices' | '/api/rooms' | '/api/devices/$id'
+  to:
+    | '/'
+    | '/api/devices'
+    | '/api/rooms'
+    | '/api/devices/$id'
+    | '/api/devices/$id/toggle'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/devices'
+    | '/api/rooms'
+    | '/api/devices/$id'
+    | '/api/devices/$id/toggle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,15 +123,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDevicesIdRouteImport
       parentRoute: typeof ApiDevicesRoute
     }
+    '/api/devices/$id/toggle': {
+      id: '/api/devices/$id/toggle'
+      path: '/toggle'
+      fullPath: '/api/devices/$id/toggle'
+      preLoaderRoute: typeof ApiDevicesIdToggleRouteImport
+      parentRoute: typeof ApiDevicesIdRoute
+    }
   }
 }
 
+interface ApiDevicesIdRouteChildren {
+  ApiDevicesIdToggleRoute: typeof ApiDevicesIdToggleRoute
+}
+
+const ApiDevicesIdRouteChildren: ApiDevicesIdRouteChildren = {
+  ApiDevicesIdToggleRoute: ApiDevicesIdToggleRoute,
+}
+
+const ApiDevicesIdRouteWithChildren = ApiDevicesIdRoute._addFileChildren(
+  ApiDevicesIdRouteChildren,
+)
+
 interface ApiDevicesRouteChildren {
-  ApiDevicesIdRoute: typeof ApiDevicesIdRoute
+  ApiDevicesIdRoute: typeof ApiDevicesIdRouteWithChildren
 }
 
 const ApiDevicesRouteChildren: ApiDevicesRouteChildren = {
-  ApiDevicesIdRoute: ApiDevicesIdRoute,
+  ApiDevicesIdRoute: ApiDevicesIdRouteWithChildren,
 }
 
 const ApiDevicesRouteWithChildren = ApiDevicesRoute._addFileChildren(
