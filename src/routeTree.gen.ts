@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAutomationRouteImport } from './routes/api/automation'
 import { Route as ApiDevicesRouteImport } from './routes/api/devices'
 import { Route as ApiRoomsRouteImport } from './routes/api/rooms'
 import { Route as ApiDevicesIdRouteImport } from './routes/api/devices.$id'
@@ -19,6 +20,11 @@ import { Route as ApiDevicesIdToggleRouteImport } from './routes/api/devices.$id
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAutomationRoute = ApiAutomationRouteImport.update({
+  id: '/api/automation',
+  path: '/api/automation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDevicesRoute = ApiDevicesRouteImport.update({
@@ -49,6 +55,7 @@ const ApiDevicesIdToggleRoute = ApiDevicesIdToggleRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/automation': typeof ApiAutomationRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
   '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/automation': typeof ApiAutomationRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
   '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/automation': typeof ApiAutomationRoute
   '/api/devices': typeof ApiDevicesRouteWithChildren
   '/api/rooms': typeof ApiRoomsRoute
   '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api/automation'
     | '/api/devices'
     | '/api/rooms'
     | '/api/devices/$id'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api/automation'
     | '/api/devices'
     | '/api/rooms'
     | '/api/devices/$id'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/api/automation'
     | '/api/devices'
     | '/api/rooms'
     | '/api/devices/$id'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiAutomationRoute: typeof ApiAutomationRoute
   ApiDevicesRoute: typeof ApiDevicesRouteWithChildren
   ApiRoomsRoute: typeof ApiRoomsRoute
 }
@@ -112,6 +125,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/automation': {
+      id: '/api/automation'
+      path: '/api/automation'
+      fullPath: '/api/automation'
+      preLoaderRoute: typeof ApiAutomationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/devices': {
@@ -180,6 +200,7 @@ const ApiDevicesRouteWithChildren = ApiDevicesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiAutomationRoute: ApiAutomationRoute,
   ApiDevicesRoute: ApiDevicesRouteWithChildren,
   ApiRoomsRoute: ApiRoomsRoute,
 }
