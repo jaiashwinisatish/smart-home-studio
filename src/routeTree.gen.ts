@@ -10,33 +10,188 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAnalyticsRouteImport } from './routes/api/analytics'
+import { Route as ApiAutomationRouteImport } from './routes/api/automation'
+import { Route as ApiCommandsRouteImport } from './routes/api/commands'
+import { Route as ApiDevicesRouteImport } from './routes/api/devices'
+import { Route as ApiHistoryRouteImport } from './routes/api/history'
+import { Route as ApiRoomsRouteImport } from './routes/api/rooms'
+import { Route as ApiSummaryRouteImport } from './routes/api/summary'
+import { Route as ApiAutomationIdRouteImport } from './routes/api/automation.$id'
+import { Route as ApiAutomationRunRouteImport } from './routes/api/automation.run'
+import { Route as ApiDevicesIdRouteImport } from './routes/api/devices.$id'
+import { Route as ApiDevicesIdControlRouteImport } from './routes/api/devices.$id.control'
+import { Route as ApiDevicesIdToggleRouteImport } from './routes/api/devices.$id.toggle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAnalyticsRoute = ApiAnalyticsRouteImport.update({
+  id: '/api/analytics',
+  path: '/api/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAutomationRoute = ApiAutomationRouteImport.update({
+  id: '/api/automation',
+  path: '/api/automation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCommandsRoute = ApiCommandsRouteImport.update({
+  id: '/api/commands',
+  path: '/api/commands',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDevicesRoute = ApiDevicesRouteImport.update({
+  id: '/api/devices',
+  path: '/api/devices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHistoryRoute = ApiHistoryRouteImport.update({
+  id: '/api/history',
+  path: '/api/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRoomsRoute = ApiRoomsRouteImport.update({
+  id: '/api/rooms',
+  path: '/api/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSummaryRoute = ApiSummaryRouteImport.update({
+  id: '/api/summary',
+  path: '/api/summary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAutomationIdRoute = ApiAutomationIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiAutomationRoute,
+} as any)
+const ApiAutomationRunRoute = ApiAutomationRunRouteImport.update({
+  id: '/run',
+  path: '/run',
+  getParentRoute: () => ApiAutomationRoute,
+} as any)
+const ApiDevicesIdRoute = ApiDevicesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiDevicesRoute,
+} as any)
+const ApiDevicesIdControlRoute = ApiDevicesIdControlRouteImport.update({
+  id: '/control',
+  path: '/control',
+  getParentRoute: () => ApiDevicesIdRoute,
+} as any)
+const ApiDevicesIdToggleRoute = ApiDevicesIdToggleRouteImport.update({
+  id: '/toggle',
+  path: '/toggle',
+  getParentRoute: () => ApiDevicesIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
+  '/api/automation': typeof ApiAutomationRouteWithChildren
+  '/api/commands': typeof ApiCommandsRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
+  '/api/history': typeof ApiHistoryRoute
+  '/api/rooms': typeof ApiRoomsRoute
+  '/api/summary': typeof ApiSummaryRoute
+  '/api/automation/$id': typeof ApiAutomationIdRoute
+  '/api/automation/run': typeof ApiAutomationRunRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/control': typeof ApiDevicesIdControlRoute
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
+  '/api/automation': typeof ApiAutomationRouteWithChildren
+  '/api/commands': typeof ApiCommandsRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
+  '/api/history': typeof ApiHistoryRoute
+  '/api/rooms': typeof ApiRoomsRoute
+  '/api/summary': typeof ApiSummaryRoute
+  '/api/automation/$id': typeof ApiAutomationIdRoute
+  '/api/automation/run': typeof ApiAutomationRunRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/control': typeof ApiDevicesIdControlRoute
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
+  '/api/automation': typeof ApiAutomationRouteWithChildren
+  '/api/commands': typeof ApiCommandsRoute
+  '/api/devices': typeof ApiDevicesRouteWithChildren
+  '/api/history': typeof ApiHistoryRoute
+  '/api/rooms': typeof ApiRoomsRoute
+  '/api/summary': typeof ApiSummaryRoute
+  '/api/automation/$id': typeof ApiAutomationIdRoute
+  '/api/automation/run': typeof ApiAutomationRunRoute
+  '/api/devices/$id': typeof ApiDevicesIdRouteWithChildren
+  '/api/devices/$id/control': typeof ApiDevicesIdControlRoute
+  '/api/devices/$id/toggle': typeof ApiDevicesIdToggleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/analytics'
+    | '/api/automation'
+    | '/api/commands'
+    | '/api/devices'
+    | '/api/history'
+    | '/api/rooms'
+    | '/api/summary'
+    | '/api/automation/$id'
+    | '/api/automation/run'
+    | '/api/devices/$id'
+    | '/api/devices/$id/control'
+    | '/api/devices/$id/toggle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/analytics'
+    | '/api/automation'
+    | '/api/commands'
+    | '/api/devices'
+    | '/api/history'
+    | '/api/rooms'
+    | '/api/summary'
+    | '/api/automation/$id'
+    | '/api/automation/run'
+    | '/api/devices/$id'
+    | '/api/devices/$id/control'
+    | '/api/devices/$id/toggle'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/analytics'
+    | '/api/automation'
+    | '/api/commands'
+    | '/api/devices'
+    | '/api/history'
+    | '/api/rooms'
+    | '/api/summary'
+    | '/api/automation/$id'
+    | '/api/automation/run'
+    | '/api/devices/$id'
+    | '/api/devices/$id/control'
+    | '/api/devices/$id/toggle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiAnalyticsRoute: typeof ApiAnalyticsRoute
+  ApiAutomationRoute: typeof ApiAutomationRouteWithChildren
+  ApiCommandsRoute: typeof ApiCommandsRoute
+  ApiDevicesRoute: typeof ApiDevicesRouteWithChildren
+  ApiHistoryRoute: typeof ApiHistoryRoute
+  ApiRoomsRoute: typeof ApiRoomsRoute
+  ApiSummaryRoute: typeof ApiSummaryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +203,142 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/analytics': {
+      id: '/api/analytics'
+      path: '/api/analytics'
+      fullPath: '/api/analytics'
+      preLoaderRoute: typeof ApiAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/automation': {
+      id: '/api/automation'
+      path: '/api/automation'
+      fullPath: '/api/automation'
+      preLoaderRoute: typeof ApiAutomationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/commands': {
+      id: '/api/commands'
+      path: '/api/commands'
+      fullPath: '/api/commands'
+      preLoaderRoute: typeof ApiCommandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/devices': {
+      id: '/api/devices'
+      path: '/api/devices'
+      fullPath: '/api/devices'
+      preLoaderRoute: typeof ApiDevicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/history': {
+      id: '/api/history'
+      path: '/api/history'
+      fullPath: '/api/history'
+      preLoaderRoute: typeof ApiHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/rooms': {
+      id: '/api/rooms'
+      path: '/api/rooms'
+      fullPath: '/api/rooms'
+      preLoaderRoute: typeof ApiRoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/summary': {
+      id: '/api/summary'
+      path: '/api/summary'
+      fullPath: '/api/summary'
+      preLoaderRoute: typeof ApiSummaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/automation/$id': {
+      id: '/api/automation/$id'
+      path: '/$id'
+      fullPath: '/api/automation/$id'
+      preLoaderRoute: typeof ApiAutomationIdRouteImport
+      parentRoute: typeof ApiAutomationRoute
+    }
+    '/api/automation/run': {
+      id: '/api/automation/run'
+      path: '/run'
+      fullPath: '/api/automation/run'
+      preLoaderRoute: typeof ApiAutomationRunRouteImport
+      parentRoute: typeof ApiAutomationRoute
+    }
+    '/api/devices/$id': {
+      id: '/api/devices/$id'
+      path: '/$id'
+      fullPath: '/api/devices/$id'
+      preLoaderRoute: typeof ApiDevicesIdRouteImport
+      parentRoute: typeof ApiDevicesRoute
+    }
+    '/api/devices/$id/control': {
+      id: '/api/devices/$id/control'
+      path: '/control'
+      fullPath: '/api/devices/$id/control'
+      preLoaderRoute: typeof ApiDevicesIdControlRouteImport
+      parentRoute: typeof ApiDevicesIdRoute
+    }
+    '/api/devices/$id/toggle': {
+      id: '/api/devices/$id/toggle'
+      path: '/toggle'
+      fullPath: '/api/devices/$id/toggle'
+      preLoaderRoute: typeof ApiDevicesIdToggleRouteImport
+      parentRoute: typeof ApiDevicesIdRoute
+    }
   }
 }
 
+interface ApiAutomationRouteChildren {
+  ApiAutomationIdRoute: typeof ApiAutomationIdRoute
+  ApiAutomationRunRoute: typeof ApiAutomationRunRoute
+}
+
+const ApiAutomationRouteChildren: ApiAutomationRouteChildren = {
+  ApiAutomationIdRoute: ApiAutomationIdRoute,
+  ApiAutomationRunRoute: ApiAutomationRunRoute,
+}
+
+const ApiAutomationRouteWithChildren = ApiAutomationRoute._addFileChildren(
+  ApiAutomationRouteChildren,
+)
+
+interface ApiDevicesIdRouteChildren {
+  ApiDevicesIdControlRoute: typeof ApiDevicesIdControlRoute
+  ApiDevicesIdToggleRoute: typeof ApiDevicesIdToggleRoute
+}
+
+const ApiDevicesIdRouteChildren: ApiDevicesIdRouteChildren = {
+  ApiDevicesIdControlRoute: ApiDevicesIdControlRoute,
+  ApiDevicesIdToggleRoute: ApiDevicesIdToggleRoute,
+}
+
+const ApiDevicesIdRouteWithChildren = ApiDevicesIdRoute._addFileChildren(
+  ApiDevicesIdRouteChildren,
+)
+
+interface ApiDevicesRouteChildren {
+  ApiDevicesIdRoute: typeof ApiDevicesIdRouteWithChildren
+}
+
+const ApiDevicesRouteChildren: ApiDevicesRouteChildren = {
+  ApiDevicesIdRoute: ApiDevicesIdRouteWithChildren,
+}
+
+const ApiDevicesRouteWithChildren = ApiDevicesRoute._addFileChildren(
+  ApiDevicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiAnalyticsRoute: ApiAnalyticsRoute,
+  ApiAutomationRoute: ApiAutomationRouteWithChildren,
+  ApiCommandsRoute: ApiCommandsRoute,
+  ApiDevicesRoute: ApiDevicesRouteWithChildren,
+  ApiHistoryRoute: ApiHistoryRoute,
+  ApiRoomsRoute: ApiRoomsRoute,
+  ApiSummaryRoute: ApiSummaryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
